@@ -13,3 +13,10 @@ six==1.16.0
 urllib3==1.26.13
 Werkzeug==2.2.2
 yarg==0.1.9
+keras==2.11.0
+tqdm==4.64.1
+numpy==1.23.5
+pandas==1.5.2
+scikit-learn==1.2.0
+tensorflow==2.11.0
+Pillow==9.3.0
