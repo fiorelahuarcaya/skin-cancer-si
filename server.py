@@ -4,6 +4,7 @@ from flask_cors import CORS
 import os
 from werkzeug.utils import secure_filename
 from prediccionMobile import predict
+from mejora_de_imagen import mejorar_image
 
 UPLOAD_FOLDER = './images/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -36,8 +37,10 @@ def upload_file():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        # return redirect(url_for('download_file', name=filename))
-        result = predict("./images/"+filename)
+
+        #Mejoramos la imagen
+        mejorar_image(filename)
+        result = predict("./static/"+filename)
 
         return  dumps({"predict": result[0] , "melanoma": result[1] , "other": result[2]})
     return dumps({"message": 'File not allowed'})
