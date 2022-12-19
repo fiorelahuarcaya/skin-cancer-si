@@ -1,6 +1,5 @@
 from flask import Flask, request
 from json import dumps
-import flask
 from flask_cors import CORS
 import os
 from werkzeug.utils import secure_filename
@@ -31,17 +30,12 @@ def home():
 def upload_file():
     # check if the post request has the file part
     if 'file' not in request.files:
-        response = flask.jsonify({"message": 'No file part'})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
-
+        return dumps({"message": 'No file part'})
     file = request.files['file']
     # If the user does not select a file, the browser submits an
     # empty file without a filename.
     if file.filename == '':
-        response = flask.jsonify({"message": 'No selected file'})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
+        return dumps({"message": 'No selected file'})
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(
@@ -50,14 +44,9 @@ def upload_file():
         # Mejoramos la imagen
         mejorar_image(filename)
         result = predict(os.path.join(dirname, "static/" + filename))
-        response = flask.jsonify(
-            {"predict": result[0], "melanoma": result[1], "other": result[2]})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
 
-    response = flask.jsonify({"message": 'File not allowed'})
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+        return dumps({"predict": result[0], "melanoma": result[1], "other": result[2]})
+    return dumps({"message": 'File not allowed'})
 
 
 if __name__ == "__main__":
