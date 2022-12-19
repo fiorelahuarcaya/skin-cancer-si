@@ -23,3 +23,9 @@ Run the application:
 ```bash
 python server.py
 ```
+
+For ubuntu, you may need to install the following packages:
+
+```
+sudo apt install ffmpeg libsm6 libxext6
+```
