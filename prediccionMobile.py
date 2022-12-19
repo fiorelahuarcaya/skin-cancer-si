@@ -14,6 +14,8 @@ from sklearn.datasets import load_files
 from keras.utils import np_utils
 #import keras.utils as image     
 
+dirname = os.path.dirname(__file__)
+
 def path_to_tensor(img_path):
     """
     Getting a tensor from a given path.
@@ -63,7 +65,7 @@ def mobilenet_architecture():
 
 model_architecture = mobilenet_architecture()
 # Aquí se pone el modelo de la red neuronal hdf5
-weight_path = "./weights.best.mobilenet.hdf5"
+weight_path = os.path.join(dirname, "weights.best.mobilenet.hdf5")
 
 
 def predict(img_path, 
